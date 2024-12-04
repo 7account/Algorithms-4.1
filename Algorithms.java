@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 public class Algorithms {
     private static File f;
     private static Scanner s;
+    private static int[] nums = new int[1000];
     public static void main(String[] args) throws FileNotFoundException {
         f = new File("Numbers.txt");
         int odds = odds();
@@ -117,12 +118,34 @@ public class Algorithms {
         int mode = 0;
         int count = 0;
         int maxCount = 0;
-        int i = s.nextInt();
-        while (s.hasNext()) {
-            if (count > maxCount)
-                maxCount = count;
-                mode = i;
+        int num = 0;
+        while(s.hasNextInt() && num != 1000) {
+            while(s.hasNextInt()) {
+                if ((int) nums[s.nextInt()] == num) count++;
+                nums[s.nextInt()]++;
+                if (count > maxCount) {
+                    maxCount = count;
+                    mode = num;
+                }
+            }
+            num++;
         }
         return mode;
     }
+
+
+
+        // int mode = 0;
+        // int maxCount = 0;
+        // int x = s.nextInt();
+        // while (s.hasNext()) {
+        //     int count = 0;
+        //     for (int i = x; s.hasNext(); i = s.nextInt()) {
+        //         if (i == x) count++;
+        //     }
+        //     if (count > maxCount)
+        //         maxCount = count;
+        //         mode = x;
+        // }
+        // return mode;
 }
