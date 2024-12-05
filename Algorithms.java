@@ -1,12 +1,12 @@
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList; //for mode
+import java.util.Collections; //for mode
 
 public class Algorithms {
     private static File f;
-    private static Scanner s;
-    private static int[] nums = new int[1000];
-    public static void main(String[] args) throws FileNotFoundException {
+    private static Scanner s;    public static void main(String[] args) throws FileNotFoundException {
         f = new File("Numbers.txt");
         int odds = odds();
         int evens = evens();
@@ -115,37 +115,30 @@ public class Algorithms {
 
     public static int mode() throws FileNotFoundException{
         s = new Scanner(f);
-        int mode = 0;
+        ArrayList<Integer> listArray = new ArrayList<Integer>();
         int count = 0;
         int maxCount = 0;
-        int num = 0;
-        while(s.hasNextInt() && num != 1000) {
-            while(s.hasNextInt()) {
-                if ((int) nums[s.nextInt()] == num) count++;
-                nums[s.nextInt()]++;
+        int mode = 0;
+        while (s.hasNext()) {
+            listArray.add(s.nextInt()); //use Mr.Holmer's hint- put every number into some sort of list
+        }
+        Collections.sort(listArray); //sort listArray in order to get number of times the # pops up
+        int[] size = new int[listArray.size()]; //calculate size of list
+        int x = 0;
+        while (x<listArray.size()) {
+            size[x] = listArray.get(x); // convert listArray to some sort of array
+            x++;
+        }
+        for (int i = 1; i < size.length-1; i++) {
+            if (size[i] == size[i-1]) { //find if the array starting at zero is greater than +1
+                count++;
                 if (count > maxCount) {
                     maxCount = count;
-                    mode = num;
+                    mode = size[i];
                 }
             }
-            num++;
+            else count = 0; //count has to be zero or else it would still be adding 
         }
         return mode;
     }
-
-
-
-        // int mode = 0;
-        // int maxCount = 0;
-        // int x = s.nextInt();
-        // while (s.hasNext()) {
-        //     int count = 0;
-        //     for (int i = x; s.hasNext(); i = s.nextInt()) {
-        //         if (i == x) count++;
-        //     }
-        //     if (count > maxCount)
-        //         maxCount = count;
-        //         mode = x;
-        // }
-        // return mode;
 }
